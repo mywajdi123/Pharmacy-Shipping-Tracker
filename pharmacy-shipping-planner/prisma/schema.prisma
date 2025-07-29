@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      Role     @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  createdShipments Shipment[]
+  assignedTasks    Task[]
+
+  @@map("users")
+}
+
+model Patient {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String?
+  phone       String?
+  address     String
+  city        String
+  state       String
+  zipCode     String
+  dateOfBirth DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  shipments Shipment[]
+
+  @@map("patients")
+}
+
+model Medication {
+  id          String   @id @default(cuid())
+  name        String
+  dosage      String
+  form        String   // tablet, capsule, liquid, etc.
+  ndc         String?  // National Drug Code
+  temperature String   @default("ROOM") // ROOM, REFRIGERATED, FROZEN
+  controlled  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  shipmentItems ShipmentItem[]
+
+  @@map("medications")
+}
+
+model Shipment {
+  id              String        @id @default(cuid())
+  shipmentNumber  String        @unique
+  status          ShipmentStatus @default(PENDING)
+  priority        Priority      @default(NORMAL)
+  shippingMethod  String        // standard, expedited, overnight
+  carrier         String        // UPS, FedEx, USPS
+  trackingNumber  String?
+  estimatedDelivery DateTime?
+  actualDelivery  DateTime?
+  
+  // Addresses
+  fromAddress     String
+  toAddress       String
+  toCity          String
+  toState         String
+  toZipCode       String
+  
+  // Coordinates for mapping
+  fromLat         Float?
+  fromLng         Float?
+  toLat           Float?
+  toLng           Float?
+  
+  // Cost and weight
+  shippingCost    Decimal?
+  totalWeight     Float?
+  
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  patientId       String
+  patient         Patient @relation(fields: [patientId], references: [id])
+  createdById     String
+  createdBy       User    @relation(fields: [createdById], references: [id])
+  
+  items           ShipmentItem[]
+  tasks           Task[]
+  trackingEvents  TrackingEvent[]
+
+  @@map("shipments")
+}
+
+model ShipmentItem {
+  id            String @id @default(cuid())
+  quantity      Int
+  instructions  String?
+  
+  // Relations
+  shipmentId    String
+  shipment      Shipment   @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  medicationId  String
+  medication    Medication @relation(fields: [medicationId], references: [id])
+
+  @@map("shipment_items")
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus @default(PENDING)
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relations
+  shipmentId  String
+  shipment    Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  assignedToId String?
+  assignedTo  User?    @relation(fields: [assignedToId], references: [id])
+
+  @@map("tasks")
+}
+
+model TrackingEvent {
+  id          String   @id @default(cuid())
+  status      String
+  description String
+  location    String?
+  timestamp   DateTime
+  createdAt   DateTime @default(now())
+
+  // Relations
+  shipmentId  String
+  shipment    Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+
+  @@map("tracking_events")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  PHARMACIST
+  STAFF
+}
+
+enum ShipmentStatus {
+  PENDING
+  PREPARING
+  READY_TO_SHIP
+  SHIPPED
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  EXCEPTION
+  RETURNED
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
