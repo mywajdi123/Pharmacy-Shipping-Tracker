@@ -1,6 +1,6 @@
 # 📦 Pharmacy Shipping Tracker for Mail in Rx
 
-A full stack web application designed to help pharmacies track cold chain medication shipments end to end. Built with **Next.js**, **Prisma**, **Neon (PostgreSQL)**, and **Tailwind CSS**, this platform enables pharmacists to:
+Web application designed to help pharmacies track cold chain medication shipments end to end. Built with **Next.js**, **Prisma**, **Neon (PostgreSQL)**, and **Tailwind CSS**, this platform enables pharmacists to:
 
 - Select patients and medications
 - Plan and cost out shipments
