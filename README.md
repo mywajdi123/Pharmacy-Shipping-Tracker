@@ -42,10 +42,8 @@ A full stack web application designed to help pharmacies track cold chain medica
 | Frontend    | Next.js 14 (App Router)          |
 | Styling     | Tailwind CSS                     |
 | Auth        | NextAuth.js (GitHub Provider)    |
-| Database    | PostgreSQL via Neon              |
+| Database    | PostgreSQL via NeonDB            |
 | ORM         | Prisma                           |
 | API Routes  | Next.js Server Actions + REST    |
-| Maps        | Mapbox SDK or Leaflet (configurable) |
-| Deployment  | Vercel (frontend) + Neon (cloud DB) |
 
 ---
