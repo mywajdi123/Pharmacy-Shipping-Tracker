@@ -11,8 +11,14 @@ Web application designed to help pharmacies track cold chain medication shipment
 
 ## Example of Web App with UI:
 <img width="539" height="686" alt="page1" src="https://github.com/user-attachments/assets/d466c0ba-205a-4eb5-9f07-d9b27d2a6d79" />
+
+
 <img width="525" height="933" alt="page2" src="https://github.com/user-attachments/assets/f8b61928-91e4-4c7a-aa47-5626e8eb048f" />
+
+
 <img width="468" height="835" alt="page3" src="https://github.com/user-attachments/assets/2a3fb3b3-4b65-4a72-8b2a-f92374e526d0" />
+
+
 <img width="385" height="484" alt="page4" src="https://github.com/user-attachments/assets/5eeac31c-0b48-4463-b06c-e1d689c4d4a1" />
 
 ## Features
