@@ -25,7 +25,6 @@ Web application designed to help pharmacies track cold chain medication shipment
 - Toggle cold chain features: temperature monitoring, signature delivery
 
 ### Shipment Tracking
-- Interactive **Google Maps** view (via Mapbox or similar)
 - Timeline of shipment status updates
 - Displays latest location, delivery ETA, and exceptions
 
