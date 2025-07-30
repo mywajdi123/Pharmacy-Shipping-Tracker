@@ -1,4 +1,4 @@
-# 📦 Pharmacy Shipping Tracker for Mail in Rx
+# 📦 Pharmacy Shipping Management App for Mail in Rx
 
 Web application designed to help pharmacies track cold chain medication shipments end to end. Built with **Next.js**, **Prisma**, **Neon (PostgreSQL)**, and **Tailwind CSS**, this platform enables pharmacists to:
 
